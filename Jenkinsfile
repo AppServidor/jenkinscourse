@@ -7,6 +7,12 @@ pipeline {
     environment {
         NEW_VERSION = '1.3.0'
     }
+    /*
+         environment {
+        AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id')
+        AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
+    }
+    */
     stages {
         stage ('Initialize') {
             steps {
@@ -19,18 +25,24 @@ pipeline {
         }
 
         stage ('Build') {
-            when {
+         /*when {
                 expression { 
                     BRANCH_NAME == 'master'
                 }   
             }
+          */  
             steps {
                 sh 'mvn -Dmaven.test.failure.ignore=true install' 
+                withCredentials([
+                    usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PWD)
+                ]) {
+                        sh "some script ${USER} ${PWD}"
+                }
             }
             post {
-                always {
+              /* always {
                     echo "Hola"
-                }
+                }*/  
                 success {
                     junit 'target/surefire-reports/**/*.xml' 
                 }
