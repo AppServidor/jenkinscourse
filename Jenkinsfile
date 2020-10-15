@@ -15,10 +15,18 @@ pipeline {
         }
 
         stage ('Build') {
+            when {
+                expression { 
+                    BRANCH_NAME == 'master'
+                }   
+            }
             steps {
                 sh 'mvn -Dmaven.test.failure.ignore=true install' 
             }
             post {
+                always {
+                    echo "Hola"
+                }
                 success {
                     junit 'target/surefire-reports/**/*.xml' 
                 }
