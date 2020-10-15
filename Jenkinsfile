@@ -23,7 +23,8 @@ pipeline {
                     echo "M2_HOME = ${M2_HOME}"
                     echo "building version ${NEW_VERSION}"
                     echo "usuario credentials ${USERC}"
-                    echo "user credentials ${USERC_USR}"
+                    echo "usuarionombre credentials ${USERC_USR}"
+                     echo "usuarionpass credentials ${USERC_PWD}"
                 '''
             }
         }
