@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
         NEW_VERSION = '1.3.0'
-        USER = 'user'
+        USERC = credentials('server-credentials');
         PWD = '1234'
     }
     /*
@@ -22,6 +22,8 @@ pipeline {
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
                     echo "building version ${NEW_VERSION}"
+                    echo "user credentials ${USERC}"
+                    echo "user credentials ${USERC_USR}"
                 '''
             }
         }
@@ -35,11 +37,6 @@ pipeline {
           */  
             steps {
                 sh 'mvn -Dmaven.test.failure.ignore=true install' 
-                withCredentials([
-                    usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PWD)
-                ]) {
-                        sh "some script ${USER} ${PWD}"
-                }
             }
             post {
               /* always {
