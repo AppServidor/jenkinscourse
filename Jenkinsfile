@@ -22,7 +22,7 @@ pipeline {
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
                     echo "building version ${NEW_VERSION}"
-                    echo "user credentials ${USERC}"
+                    echo "usuario credentials ${USERC}"
                     echo "user credentials ${USERC_USR}"
                 '''
             }
